@@ -27,7 +27,7 @@ st.markdown("""
 # 右上にクレジットを表示
 st.markdown('<p class="credit">開発/制作：緒方</p>', unsafe_allow_html=True)
 
-st.title('📱 伝送換算アシスト (200-999)')
+st.title('📱 伝送換算アシスト (10進 200-999)')
 
 # --- 1. 基本情報設定 ---
 with st.expander("⚙️ 基本情報設定 (200-999基準)", expanded=True):
@@ -62,8 +62,8 @@ with st.expander("⚙️ 基本情報設定 (200-999基準)", expanded=True):
     st.caption(f"💡 現在の設定: {resistance}Ω の抵抗により、{a_min}mA→{v_min:.3f}V / {a_max}mA→{v_max:.3f}V となっています。")
 
     # 伝送値幅（10進数 200-999）
-    t_min = 200.0
-    t_max = 999.0
+    t_min = 200
+    t_max = 999
 
 st.markdown("---")
 
@@ -72,8 +72,9 @@ mode = st.radio("項目を選択して入力", ["伝送値", "指示値", "割�
 
 percent = 0.0
 if mode == "伝送値":
-    val = st.number_input("現在の伝送値 (200-999)", value=200.0, step=1.0)
-    percent = (val - t_min) / (t_max - t_min)
+    # format="%.0f" で小数点以下の表示を消し、整数として扱う
+    val = st.number_input("現在の伝送値 (200-999)", value=200, min_value=0, max_value=2000, step=1, format="%d")
+    percent = (float(val) - t_min) / (t_max - t_min)
 elif mode == "指示値":
     val = st.number_input("指示値", value=s_min)
     percent = (val - s_min) / (s_max - s_min)
@@ -91,7 +92,8 @@ elif mode == "電圧(V)":
 res_scale = s_min + (s_max - s_min) * percent
 res_ma = a_min + (a_max - a_min) * percent
 res_v = v_min + (v_max - v_min) * percent
-res_dec = round(t_min + (t_max - t_min) * percent)
+# 伝送値の結果を整数に丸める
+res_dec = int(round(t_min + (t_max - t_min) * percent))
 
 st.markdown('<div class="result-box">', unsafe_allow_html=True)
 st.subheader("📊 換算結果")
@@ -99,6 +101,7 @@ c_r1, c_r2, c_r3 = st.columns(3)
 c_r1.metric("指示値", f"{res_scale:.2f}")
 c_r2.metric("電流", f"{res_ma:.2f} mA")
 c_r3.metric("電圧", f"{res_v:.3f} V")
+# 整数として表示
 st.metric("伝送値 (10進)", f"{res_dec}")
 st.markdown('</div>', unsafe_allow_html=True)
 
