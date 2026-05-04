@@ -27,7 +27,7 @@ st.markdown("""
 # 右上にクレジットを表示
 st.markdown('<p class="credit">開発/制作：緒方</p>', unsafe_allow_html=True)
 
-st.title('📱 伝送換算アシスト (10進 200-999)')
+st.title('📱 伝送換算アシスト (200-999)')
 
 # --- 1. 基本情報設定 ---
 with st.expander("⚙️ 基本情報設定 (200-999基準)", expanded=True):
