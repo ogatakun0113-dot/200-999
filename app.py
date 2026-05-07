@@ -1,7 +1,7 @@
 import streamlit as st
 
 # --- ページ設定 ---
-st.set_page_config(page_title="伝送値換算 (200-999)", layout="centered")
+st.set_page_config(page_title="伝送値換算 (200-999)(DEC)", layout="centered")
 
 # --- 見た目の設定 (CSS) ---
 st.markdown("""
@@ -21,7 +21,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 st.markdown('<p class="credit">開発/制作：緒方</p>', unsafe_allow_html=True)
-st.title('📱 伝送値換算 (200-999)')
+st.title('📱 伝送値換算 (200-999)(DEC)')
 
 # --- 1. 基本情報設定 ---
 with st.expander("⚙️ 基本情報設定 (200-999基準)", expanded=True):
